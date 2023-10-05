@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     const sp = new URLSearchParams(request.url).entries()
     const id = sp.next().value[1]
 
-    if (id) {''
+    if (id) {
       const result =
         await client.sql`SELECT name, email, department FROM funcionarios WHERE id = ${id}`
       client.end()
@@ -18,11 +18,11 @@ export async function GET(request: Request) {
 
     const result =
       await client.sql`SELECT name, email, department FROM funcionarios`
-    client.end()
     return new NextResponse(JSON.stringify(result.rows), { status: 200 })
   } catch (error) {
-    client.end()
     return NextResponse.json({ error }, { status: 500 })
+  } finally {
+    client.end()
   }
 }
 
@@ -41,14 +41,14 @@ export async function POST(request: Request) {
     }
 
     await client.sql`INSERT INTO funcionarios (name, email, department) VALUES (${name}, ${email}, ${department})`
-    client.end()
     return new NextResponse(
       JSON.stringify({ message: "Funcionário criado com sucesso" }),
       { status: 200 }
     )
   } catch (error) {
-    client.end()
     return NextResponse.json({ error }, { status: 500 })
+  } finally {
+    client.end()
   }
 }
 
@@ -68,14 +68,14 @@ export async function PUT(request: Request) {
     }
 
     await client.sql`UPDATE funcionarios SET name = ${name}, email = ${email}, department = ${department} WHERE id = ${id}`
-    client.end()
     return new NextResponse(
       JSON.stringify({ message: "Funcionário atualizado com sucesso" }),
       { status: 200 }
     )
   } catch (error) {
-    client.end()
     return NextResponse.json({ error }, { status: 500 })
+  } finally {
+    client.end()
   }
 }
 
@@ -93,13 +93,13 @@ export async function DELETE(req: Request) {
       })
 
     await client.sql`DELETE FROM funcionarios WHERE id = ${id}`
-    client.end()
     return new NextResponse(
       JSON.stringify({ message: "Funcionário deletado com sucesso" }),
       { status: 200 }
     )
   } catch (error) {
-    client.end()
     return NextResponse.json({ error }, { status: 500 })
+  } finally {
+    client.end()
   }
 }
