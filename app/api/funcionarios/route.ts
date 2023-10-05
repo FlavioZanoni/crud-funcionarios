@@ -10,16 +10,14 @@ export async function GET(request: Request) {
     const id = sp.next().value[1]
 
     if (id) {
-      const result = await client.query(
-        `SELECT nome, email, department FROM funcionarios WHERE id = ${id}`
-      )
+      const result =
+        await client.sql`SELECT nome, email, department FROM funcionarios WHERE id = ${id}`
       client.end()
       return new NextResponse(JSON.stringify(result.rows), { status: 200 })
     }
 
-    const result = await client.query(
-      "SELECT nome, email, department FROM funcionarios"
-    )
+    const result =
+      await client.sql`SELECT nome, email, department FROM funcionarios`
     client.end()
     return new NextResponse(JSON.stringify(result.rows), { status: 200 })
   } catch (error) {
