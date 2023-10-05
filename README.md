@@ -50,12 +50,12 @@ $ curl https://crud-funcionarios-liard.vercel.app/api/funcionarios
 
 ```bash
 # POST
-$ curl -X POST -H "Content-Type: application/json" -d '{"nome":"nome","email":"email", "department":"department"}'
+$ curl -X POST -H "Content-Type: application/json" -d '{"name":"nome","email":"email", "department":"department"}'
 ```
 
 ```bash
 # PUT
-$ curl -X PUT -H "Content-Type: application/json" -d '{"id":1, "nome":"nome","email":"email", "department":"department"}'
+$ curl -X PUT -H "Content-Type: application/json" -d '{"id":1, "name":"nome","email":"email", "department":"department"}'
 ```
 
 ```bash

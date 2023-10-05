@@ -9,15 +9,15 @@ export async function GET(request: Request) {
     const sp = new URLSearchParams(request.url).entries()
     const id = sp.next().value[1]
 
-    if (id) {
+    if (id) {''
       const result =
-        await client.sql`SELECT nome, email, department FROM funcionarios WHERE id = ${id}`
+        await client.sql`SELECT name, email, department FROM funcionarios WHERE id = ${id}`
       client.end()
       return new NextResponse(JSON.stringify(result.rows), { status: 200 })
     }
 
     const result =
-      await client.sql`SELECT nome, email, department FROM funcionarios`
+      await client.sql`SELECT name, email, department FROM funcionarios`
     client.end()
     return new NextResponse(JSON.stringify(result.rows), { status: 200 })
   } catch (error) {
@@ -31,16 +31,16 @@ export async function POST(request: Request) {
   await client.connect()
   try {
     const req = await request.json()
-    const { nome, email, department } = req
+    const { name, email, department } = req
 
-    if (!nome || !email || !department) {
+    if (!name || !email || !department) {
       return new NextResponse(
         JSON.stringify({ message: "Dados incompletos" }),
         { status: 400 }
       )
     }
 
-    await client.sql`INSERT INTO funcionarios (nome, email, department) VALUES (${nome}, ${email}, ${department})`
+    await client.sql`INSERT INTO funcionarios (name, email, department) VALUES (${name}, ${email}, ${department})`
     client.end()
     return new NextResponse(
       JSON.stringify({ message: "Funcionário criado com sucesso" }),
@@ -58,16 +58,16 @@ export async function PUT(request: Request) {
 
   try {
     const req = await request.json()
-    const { nome, email, department, id } = req
+    const { name, email, department, id } = req
 
-    if (!id || !nome || !email || !department) {
+    if (!id || !name || !email || !department) {
       return new NextResponse(
         JSON.stringify({ message: "Dados incompletos" }),
         { status: 400 }
       )
     }
 
-    await client.sql`UPDATE funcionarios SET nome = ${nome}, email = ${email}, department = ${department} WHERE id = ${id}`
+    await client.sql`UPDATE funcionarios SET name = ${name}, email = ${email}, department = ${department} WHERE id = ${id}`
     client.end()
     return new NextResponse(
       JSON.stringify({ message: "Funcionário atualizado com sucesso" }),
